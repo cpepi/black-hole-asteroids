@@ -1,9 +1,8 @@
 from proj import Projectile
-from button import Button
 import graphics as g
 
 class ShotTracker:
-    
+
     def __init__(self, win, angle, velocity, height):
 
         self.proj = Projectile(angle, velocity, height)
@@ -48,10 +47,10 @@ class InputDialog:
         self.height = g.Entry(g.Point(3, 3), 5).draw(win)
         self.height.setText(str(height))
 
-        self.fire = Button(win, g.Point(1, 4), 1.25, 0.5, "Fire")
+        self.fire = g.Button(win, g.Point(1, 4), 1.25, 0.5, "Fire")
         self.fire.activate()
 
-        self.quit = Button(win, g.Point(3, 4), 1.25, 0.5, "Quit")
+        self.quit = g.Button(win, g.Point(3, 4), 1.25, 0.5, "Quit")
         self.quit.activate()
 
     def interact(self):
@@ -70,7 +69,7 @@ class InputDialog:
 
     def close(self):
         self.win.close()
-        
+
 def main():
 
     win = g.GraphWin("Cannonball Animation", 640, 480, autoflush = False)
