@@ -2,8 +2,8 @@ from math import sin, cos, radians
 
 class Projectile:
 
-    def __init__(self, angle, velocity, height):
-        self.xpos = 0.0
+    def __init__(self, angle, velocity, xval, height):
+        self.xpos = xval
         self.ypos = height
         theta = radians(angle)
         self.xvel = velocity * cos(theta)
@@ -20,5 +20,3 @@ class Projectile:
 
     def getX(self):
         return self.xpos
-
-    
