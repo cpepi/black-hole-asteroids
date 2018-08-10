@@ -22,20 +22,24 @@ class ProjectileApp:
             key = self.win.checkKey()
             if key in ['q', 'Q']:
                 break
-            if key == "Up":
+            if key == "1":
                 self.launcher.adjAngle(3)
-            elif key == "Down":
+            elif key == "3":
                 self.launcher.adjAngle(-3)
-            elif key == "Right":
+            elif key == "5":
                 self.launcher.adjVel(5)
-            elif key == "Left":
+            elif key == "2":
                 self.launcher.adjVel(-5)
-            elif key == "x":
+            elif key == "Up":
+                self.launcher.adjHeight(3)
+            elif key == "Down":
+                self.launcher.adjHeight(-3)
+            elif key in ["Return", "+"]:
                 self.shots.append(self.launcher.fire())
 
             update(30)
 
-        win.close()
+        self.win.close()
 
     def updateShots(self, dt):
         alive = []

@@ -12,15 +12,19 @@ class Launcher:
         self.vel = self.vel + amt
         self.redraw()
 
+    def adjHeight(self, amt):
+        self.height = self.height + amt
+        self.redraw()
+
     def redraw(self):
         self.arrow.undraw()
-        pt2 = Point(self.vel*cos(self.angle), self.vel*sin(self.angle))
-        self.arrow = Line(Point(0, 0), pt2).draw(self.win)
+        pt2 = Point(self.vel*cos(self.angle), self.vel*sin(self.angle)+ self.height)
+        self.arrow = Line(Point(0, self.height), pt2).draw(self.win)
         self.arrow.setArrow("last")
         self.arrow.setWidth(3)
 
     def fire(self):
-        return ShotTracker(self.win, degrees(self.angle), self.vel, 0.0)
+        return ShotTracker(self.win, degrees(self.angle), self.vel, self.height)
 
     def __init__(self, win):
         base = Circle(Point(0, 0), 3)
@@ -31,5 +35,6 @@ class Launcher:
         self.win = win
         self.angle = radians(45.0)
         self.vel = 40.0
+        self.height = 0
         self.arrow = Line(Point(0, 0), Point(0, 0)).draw(win)
         self.redraw()
