@@ -34,6 +34,10 @@ class ProjectileApp:
                 self.launcher.adjHeight(3)
             elif key == "Down":
                 self.launcher.adjHeight(-3)
+            elif key == "Right":
+                self.launcher.adjX(3)
+            elif key == "Left":
+                self.launcher.adjX(-3)
             elif key in ["Return", "+"]:
                 self.shots.append(self.launcher.fire())
 
