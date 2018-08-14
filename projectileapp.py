@@ -10,6 +10,8 @@ class ProjectileApp:
         self.win.setCoords(-10, -10, 210, 155)
         self.launcher = Launcher(self.win)
         self.shots = []
+        self.autofire = False
+        self.firerate = False
         Line(Point(-10, 0), Point(210, 0)).draw(self.win)
         for x in range(0, 210, 50):
             Text(Point(x, -7), str(x)).draw(self.win)
@@ -38,8 +40,17 @@ class ProjectileApp:
                 self.launcher.adjX(3)
             elif key == "Left":
                 self.launcher.adjX(-3)
-            elif key in ["Return", "+"]:
-                self.shots.append(self.launcher.fire())
+            elif key == "6":
+                self.autofire = not self.autofire
+            if self.autofire == True:
+                if self.firerate == True:
+                    self.shots.append(self.launcher.fire())
+                    self.firerate = False
+                else:
+                    self.firerate = True
+            else:
+                if key in ["Return"]:
+                    self.shots.append(self.launcher.fire())
 
             update(30)
 
