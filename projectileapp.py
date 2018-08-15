@@ -42,8 +42,7 @@ class ProjectileApp:
         if self.pressed["u"]:
             if self.launcher.vel > -100: self.launcher.adjVel(-5)
         if self.pressed["Return"]:
-            if self.firerate % 4 == 0:
-                self.shots.append(self.launcher.fire(2, "blue"))
+            if self.firerate % 4 == 0: self.shots.append(self.launcher.fire(2, "blue"))
             self.firerate +=1
 
 
