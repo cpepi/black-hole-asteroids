@@ -1,6 +1,7 @@
 import graphics
 from graphics import *
 from launcher import Launcher
+from fighter import Fighter
 
 
 class ProjectileApp:
@@ -13,6 +14,8 @@ class ProjectileApp:
         self.launcher = Launcher(self.win)
         self.shots = []
         self.firerate = 0
+        self.fighter = Fighter(self.win, Point(100, 100))
+
         self.pressed = {}
         self.set_bindings()
         Line(Point(-10, 0), Point(210, 0)).draw(self.win)
@@ -21,7 +24,7 @@ class ProjectileApp:
             Line(Point(x, 0), Point(x, 2)).draw(self.win)
 
     def set_bindings(self):
-        for char in ["u","i","o","p","Return","q","1","2","3","5"]:
+        for char in ["u","i","o","p","Return","q","1","2","3","5","Left","Right","Up","Down"]:
             graphics._root.bind("<KeyPress-{0}>".format(char), self._pressed)
             graphics._root.bind("<KeyRelease-{0}>".format(char), self._released)
             self.pressed[char] = False
@@ -44,6 +47,10 @@ class ProjectileApp:
         if self.pressed["Return"]:
             if self.firerate % 4 == 0: self.shots.append(self.launcher.fire(2, "blue"))
             self.firerate +=1
+        if self.pressed["Up"]: self.fighter.adjVel(2)
+        if self.pressed["Down"]: self.fighter.adjVel(-2)
+        if self.pressed["Left"]: self.fighter.adjAngle(4)
+        if self.pressed["Right"]: self.fighter.adjAngle(-4)
 
 
     def _pressed(self, event):
@@ -62,6 +69,7 @@ class ProjectileApp:
 
             if self.pressed["q"]: break
             self.updateShots(1/30)
+            self.fighter.update(1/30, self.win.trans)
             self.animate()
             update(30)
 
@@ -77,9 +85,5 @@ class ProjectileApp:
             #     shot.undraw()
         self.shots = alive
 
-
 if __name__ == "__main__":
     ProjectileApp().run()
-
-# app = ProjectileApp()
-# app.run()
