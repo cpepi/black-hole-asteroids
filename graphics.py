@@ -411,6 +411,8 @@ class Transform:
         yspan = (yhigh-ylow)
         self.xbase = xlow
         self.ybase = yhigh
+        self.xmax = xhigh
+        self.ymin = ylow
         self.xscale = xspan/float(w-1)
         self.yscale = yspan/float(h-1)
 

@@ -34,9 +34,9 @@ class Launcher:
         self.base.setOutline("red")
         self.base.draw(self.win)
 
-    def fire(self):
+    def fire(self, size, color):
         return ShotTracker(self.win, degrees(self.angle),
-                           self.vel, self.xval, self.height)
+                           self.vel, self.xval, self.height, size, color)
 
     def __init__(self, win):
         self.base = Circle(Point(0, 0), 3)
