@@ -48,8 +48,8 @@ class Fighter:
             self.xpos = self.win.trans.xmax -1
         if self.xpos > self.win.trans.xmax:
             self.xpos = self.win.trans.xbase + 1
-        self.yvel *= 0.985
-        self.xvel *= 0.985
+        self.yvel *= 0.988
+        self.xvel *= 0.988
 
         self.redraw()
 
