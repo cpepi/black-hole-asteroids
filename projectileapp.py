@@ -69,7 +69,7 @@ class ProjectileApp:
 
             if self.pressed["q"]: break
             self.updateShots(1/30)
-            self.fighter.update(1/30, self.win.trans)
+            self.fighter.update(1/30)
             self.animate()
             update(30)
 

@@ -6,12 +6,8 @@ class Fighter:
 
     def adjAngle(self, amt):
         self.angle = self.angle + radians(amt)
-        self.redraw()
 
     def adjVel(self, amt):
-        # if selfself.vel = self.vel + amt
-        # self.redraw()
-        self.vel = sqrt(self.xvel**2+self.yvel**2)
         if self.vel < 80:
             self.xvel = self.xvel + cos(self.angle)*amt
             self.yvel = self.yvel + sin(self.angle)*amt
@@ -35,13 +31,25 @@ class Fighter:
         return ShotTracker(self.win, degrees(self.angle),
                            self.vel, self.xpos, self.ypos)
 
-    def update(self, time, transf):
+    def update(self, time):
 
+        self.vel = sqrt(self.xvel**2+self.yvel**2)
         self.xpos = self.xpos + time * self.xvel
         yvel_temp = self.yvel - 9.8 * time
         self.ypos = self.ypos + time * (self.yvel + yvel_temp) / 2.0
         self.yvel = yvel_temp
-        if self.ypos < 0 : self.yvel *= -0.9
+        if self.ypos < self.win.trans.ymin:
+            self.yvel *= -0.9
+            self.ypos +=3
+        if self.ypos > self.win.trans.ybase:
+            self.yvel *= -0.9
+            self.ypos -=3
+        if self.xpos < self.win.trans.xbase:
+            self.xpos = self.win.trans.xmax -1
+        if self.xpos > self.win.trans.xmax:
+            self.xpos = self.win.trans.xbase + 1
+        self.yvel *= 0.985
+        self.xvel *= 0.985
 
         self.redraw()
 
