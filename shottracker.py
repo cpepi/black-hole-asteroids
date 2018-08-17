@@ -3,11 +3,11 @@ import graphics as g
 
 class ShotTracker:
 
-    def __init__(self, win, angle, velocity, xval, height):
+    def __init__(self, win, angle, velocity, xval, height, size, color):
 
         self.proj = Projectile(angle, velocity, xval, height)
-        self.marker = g.Circle(g.Point(xval, height), 3)
-        self.marker.setFill("blue")
+        self.marker = g.Circle(g.Point(xval, height), size)
+        self.marker.setFill(color)
         self.marker.setOutline("red")
         self.marker.draw(win)
 
