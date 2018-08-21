@@ -11,6 +11,7 @@ class BHApp:
         self.win.setCoords(-0, 0, 1180, 760)
         self.shots = []
         self.bh = []
+        self.ast = []
         self.firerate = 0
         self.fighter = Fighter(self.win)
         self.pressed = {}
@@ -26,7 +27,7 @@ class BHApp:
         if self.pressed["Return"]:
             if self.firerate % 4 == 0: self.shots.append(self.fighter.fire(5, "blue"))
             self.firerate +=1
-        if self.pressed["Up"]: self.fighter.adjVel(6)
+        if self.pressed["Up"]: self.fighter.adjVel(5)
         if self.pressed["Down"]: self.fighter.adjVel(-3)
         if self.pressed["Left"]: self.fighter.adjAngle(4)
         if self.pressed["Right"]: self.fighter.adjAngle(-4)
@@ -47,6 +48,7 @@ class BHApp:
             if self.pressed["q"]: break
             self.updateShots(1/30)
             self.updateBH(1/30)
+            self.updateAST(1/30)
             self.fighter.update(1/30, self.bh)
             self.animate()
             update(30)
@@ -67,7 +69,7 @@ class BHApp:
         alive = []
         for bh in self.bh:
             bh.update(dt, self.bh)
-            if bh.mass > 100:
+            if bh.mass > 10:
                 alive.append(bh)
             else:
                 bh.base.undraw()
@@ -87,6 +89,16 @@ class BHApp:
         if len(alive) < 3:
             alive.append(BlackHole(self.win, self.fighter.xpos,self.fighter.ypos))
         self.bh = alive
+
+    def updateAST(self, dt):
+        alive = []
+        for ast in self.ast:
+            ast.update(dt, self.bh)
+            alive.append(ast)
+
+        if len(alive) < 3:
+            alive.append(Asteroid(self.win, self.fighter.xpos,self.fighter.ypos))
+        self.ast = alive
 
 if __name__ == "__main__":
     BHApp().run()

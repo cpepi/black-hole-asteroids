@@ -119,5 +119,27 @@ class BlackHole(GameObject):
         super().update(time, bhlist)
         self.mass -=1
         self.size = self.mass // 10
-        self.yvel *= 0.88
-        self.xvel *= 0.88
+        # self.yvel *= 0.88
+        # self.xvel *= 0.88
+        if abs(self.yvel) > 10: self.yvel *= 0.8
+        if abs(self.xvel) > 10: self.xvel *= 0.8
+
+class Asteroid(GameObject):
+    def __init__(self, win, fx, fy, mass = 0, bx = None, by = None):
+        if mass == 0: self.mass = 500
+        else: self.mass = mass
+        self.angle = radians(random.randint(1,360))
+        vel = 3 * random.randint(15, 25)
+        if bx: xpos, ypos = bx, by
+        else:
+            xpos = (fx + random.randint(.1 * win.trans.xmax, .9 * win.trans.xmax)) % win.trans.xmax
+            ypos = (fy + random.randint(.1 * win.trans.ybase, .9 * win.trans.ybase)) % win.trans.ybase
+        super().__init__(win, self.mass // 20, "brown", self.angle, xpos, ypos)
+        self.xvel = vel * cos(self.angle)
+        self.yvel = vel * sin(self.angle)
+
+    def update(self, time, bhlist):
+
+        super().update(time, bhlist)
+        if abs(self.yvel) > 30: self.yvel *= 0.9
+        if abs(self.xvel) > 30: self.xvel *= 0.9
