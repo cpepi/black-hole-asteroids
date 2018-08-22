@@ -5,6 +5,9 @@ import random
 def distance(obj1, obj2):
     return sqrt((obj1.xpos-obj2.xpos)**2 + (obj1.ypos-obj2.ypos)**2)
 
+def collision(obj1, obj2):
+    return True if distance(obj1, obj2) < (obj1.size + obj2.size) else False
+
 class GameObject:
 
     def __init__(self, win, size, color, angle = (pi)/2, xpos=0, ypos=0):
@@ -83,7 +86,7 @@ class Fighter(GameObject):
 
     def __init__(self, win, size = 7, color = "purple", angle = (pi)/2, xpos = 400, ypos = 400):
 
-        self.mass = 150
+        self.mass = 180
         super().__init__(win, size, color, angle, xpos, ypos)
         self.arrow = Line(Point(400,400), Point(400,410)).draw(win)
         self.redraw()
@@ -100,6 +103,19 @@ class Missle(GameObject):
         super().update(time)
         self.fuel +=1
 
+# class Obstacle(GameObject):
+#      def __init__(self, win, fx, fy, mass, bx = None, by = None):
+#         self.mass = mass
+#         self.angle = radians(random.randint(1,360))
+#         vel = 3 * random.randint(5, 15)
+#         if bx: xpos, ypos = bx, by
+#         else:
+#             xpos = (fx + random.randint(.1 * win.trans.xmax, .9 * win.trans.xmax)) % win.trans.xmax
+#             ypos = (fy + random.randint(.1 * win.trans.ybase, .9 * win.trans.ybase)) % win.trans.ybase
+#         super().__init__(win, self.mass % 100, "black", self.angle, xpos, ypos)
+#         self.xvel = vel * cos(self.angle)
+#         self.yvel = vel * sin(self.angle)   
+
 class BlackHole(GameObject):
     def __init__(self, win, fx, fy, mass = 0, bx = None, by = None):
         if mass == 0: self.mass = 100 * random.randint(4, 8)
@@ -108,9 +124,9 @@ class BlackHole(GameObject):
         vel = 3 * random.randint(5, 15)
         if bx: xpos, ypos = bx, by
         else:
-            xpos = (fx + random.randint(.1 * win.trans.xmax, .9 * win.trans.xmax)) % win.trans.xmax
-            ypos = (fy + random.randint(.1 * win.trans.ybase, .9 * win.trans.ybase)) % win.trans.ybase
-        super().__init__(win, self.mass % 100, "black", self.angle, xpos, ypos)
+            xpos = (fx + random.randint(.15 * win.trans.xmax, .85 * win.trans.xmax)) % win.trans.xmax
+            ypos = (fy + random.randint(.15 * win.trans.ybase, .85 * win.trans.ybase)) % win.trans.ybase
+        super().__init__(win, self.mass // 10, "black", self.angle, xpos, ypos)
         self.xvel = vel * cos(self.angle)
         self.yvel = vel * sin(self.angle)
 
@@ -121,25 +137,25 @@ class BlackHole(GameObject):
         self.size = self.mass // 10
         # self.yvel *= 0.88
         # self.xvel *= 0.88
-        if abs(self.yvel) > 10: self.yvel *= 0.8
-        if abs(self.xvel) > 10: self.xvel *= 0.8
+        if abs(self.yvel) > 12: self.yvel *= 0.8
+        if abs(self.xvel) > 12: self.xvel *= 0.8
 
 class Asteroid(GameObject):
     def __init__(self, win, fx, fy, mass = 0, bx = None, by = None):
-        if mass == 0: self.mass = 500
+        if mass == 0: self.mass = 600
         else: self.mass = mass
         self.angle = radians(random.randint(1,360))
-        vel = 3 * random.randint(15, 25)
+        vel = 10 * random.randint(30, 35) - (self.mass // 4)
         if bx: xpos, ypos = bx, by
         else:
             xpos = (fx + random.randint(.1 * win.trans.xmax, .9 * win.trans.xmax)) % win.trans.xmax
             ypos = (fy + random.randint(.1 * win.trans.ybase, .9 * win.trans.ybase)) % win.trans.ybase
-        super().__init__(win, self.mass // 20, "brown", self.angle, xpos, ypos)
+        super().__init__(win, self.mass // 15, "sienna4", self.angle, xpos, ypos)
         self.xvel = vel * cos(self.angle)
         self.yvel = vel * sin(self.angle)
 
     def update(self, time, bhlist):
 
         super().update(time, bhlist)
-        if abs(self.yvel) > 30: self.yvel *= 0.9
-        if abs(self.xvel) > 30: self.xvel *= 0.9
+        if abs(self.yvel) > 170: self.yvel *= 0.99
+        if abs(self.xvel) > 170: self.xvel *= 0.99
