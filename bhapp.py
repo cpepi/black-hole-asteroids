@@ -1,3 +1,7 @@
+"""
+This is the player for a basic asteroids game. It only works on windows
+now and requires Python 3+.
+"""
 import graphics
 from graphics import *
 from gameobject import *
